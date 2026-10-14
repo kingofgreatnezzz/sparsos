@@ -1,0 +1,17 @@
+# ---------------------------------------------------------------------------
+# Spar Enugu Emergency Alert System - Python dependencies
+#
+#   Install with:   python -m pip install -r requirements.txt
+#
+# Every package below is free, open source and installed locally.  There is
+# no cloud service, no paid API and no API key anywhere in this project.
+# The two `>=` pins are the minimum versions that provide the features used:
+#   * streamlit >= 1.37  -> st.fragment(run_every=...) and st.query_params
+#   * streamlit-folium >= 0.18 -> returned_objects=["center", "zoom"]
+# ---------------------------------------------------------------------------
+
+streamlit>=1.37
+pandas>=2.0
+numpy>=1.24
+folium>=0.15
+streamlit-folium>=0.18

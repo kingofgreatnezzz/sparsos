@@ -1,0 +1,49 @@
+============================================================================
+  PHONE_SETUP.txt  -  view the SOS app on your phone (2 minutes)
+  Phone gives the hotspot, laptop joins it. Nothing else to configure.
+============================================================================
+
+STEP 1 - On the laptop
+   Turn ON the phone's hotspot, then connect the laptop to it (Wi-Fi).
+   Double-click:  run_app.bat      (or setup_and_start.bat the first time)
+   The black window prints something like:
+
+       Shopper SOS app (phone) : http://192.168.43.123:8501/?mode=sos
+
+   That IP (192.168.43.123 above) is YOUR laptop's address on the hotspot and
+   the port (8501) is what the script picked. Write both down.
+
+   If you need the IP again later, open a terminal and run:
+       ipconfig | findstr IPv4
+   Use the IPv4 address of the Wi-Fi adapter (usually 192.168.43.x or
+   172.20.10.x on an iPhone hotspot). NOT 127.0.0.1.
+
+STEP 2 - On the phone
+   Open Chrome (or any browser) and type the address EXACTLY:
+       http://192.168.43.123:8501/?mode=sos
+   Type it as http://  - not https, no "www", keep the ":8501" part and the
+   "/?mode=sos" part.
+
+STEP 3 - If it does not load
+   a) Windows Firewall is blocking it. The first time Streamlit runs, Windows
+      pops up "Allow access?" - tick PRIVATE networks and click Allow.
+      If you missed it, run this once in an ADMIN terminal:
+          netsh advfirewall firewall add rule name="Spar SOS 8501" dir=in ^
+          action=allow protocol=TCP localport=8501
+   b) Make sure the "Auto-refresh" laptop tab uses the same port as the phone
+      (both must match the number the script printed).
+   c) If the hotspot blocks clients, turn the hotspot off and on again, or use
+      a normal Wi-Fi router / another phone hotspot.
+   d) Last resort (always works): on the laptop open a second browser tab with
+          http://localhost:8501/?mode=sos
+      and put the two windows side by side. The demonstration still works.
+
+STEP 4 - Also open the dashboard on the laptop
+       http://localhost:8501/?mode=dashboard
+   Login:  spar_security  /  spar2026
+
+NOTE
+   Both addresses run from the SAME program and the SAME database, so an alert
+   raised on the phone appears on the laptop dashboard within 3 seconds.
+
+============================================================================

@@ -1,0 +1,372 @@
+============================================================================
+  DEMO_SCRIPT.txt
+  SPAR ENUGU EMERGENCY ALERT SYSTEM
+  "Design and Implementation of a Mobile-Based Emergency Alert System using
+   GPS - A Case Study of Spar Hypermarket, Enugu State"
+
+  A step-by-step script for DEFENCE DAY.
+  Total time: 5 minutes (with a 2-minute spare section at the end).
+============================================================================
+
+HOW TO READ THIS FILE
+---------------------
+   [CLICK]  = exactly what to click
+   [SAY]    = exactly what to say (you may paraphrase, but keep the numbers)
+   [PAUSE]  = stop talking, let the examiner watch the screen
+   [IF ASKED]= likely examiner question and the answer
+
+----------------------------------------------------------------------------
+  PART 0 - 10 MINUTES BEFORE THE DEFENCE (DO THIS, IT SAVES THE DEMO)
+----------------------------------------------------------------------------
+
+ 1. Close any other program that uses port 8501 (an old Streamlit window,
+    for example). Then double-click:  setup_and_start.bat
+    The script prints the port it selected and the two URLs. It also prints
+    your laptop's LAN IP address (for example 192.168.1.14).
+
+ 2. Open the Security Dashboard on the LAPTOP (this happens automatically):
+        http://localhost:8501/?mode=dashboard
+    Log in with      username: spar_security      password: spar2026
+    (or simply click "Fill demo credentials" then "Login to dashboard").
+
+ 3. IMPORTANT - ARM THE SOUND ONCE WITH A REAL CLICK.
+    Press the "Test alarm (5 s)" button at the top of the dashboard.
+    You should hear the siren for 5 seconds and then hear it stop.
+    This single click gives the browser the "user gesture" it needs, so that
+    later the siren starts AUTOMATICALLY the moment an emergency arrives.
+    (If you skip this, some browsers keep the alarm silent until the first
+    click anywhere on the page. That is a browser rule, not a bug.)
+
+ 4. Open the Shopper SOS App on the PHONE:
+        http://YOUR-LAN-IP:8501/?mode=sos      (use the IP printed in step 1)
+    The phone must show the EMERGENCY SCREEN IMMEDIATELY - a big pulsing red
+    "EMERGENCY SOS" button with the citizen's profile already loaded at the
+    top, and NO form of any kind. If you ever see a page asking for a name or
+    a phone number on the phone, you are on the profile screen: press
+    "Back to the SOS button" first, and never show that screen while
+    demonstrating the emergency itself.
+    Requirements: phone and laptop on the SAME Wi-Fi or phone hotspot, and
+    Windows Firewall must allow Python on the private network. If the phone
+    cannot connect, see PART 7 (TROUBLE-SHOOTING).
+
+ 5. Do ONE complete rehearsal run and leave the system clean:
+        - raise one SOS on the phone, let the dashboard ring,
+        - click "Dispatch Officer", then "Mark Resolved",
+        - click "Silence Alarm".
+    Practising once removes 90 % of the surprises.
+
+ 6. Turn the laptop volume up to 100 %. Turn OFF phone notifications so the
+    siren is the only sound the examiner hears.
+
+----------------------------------------------------------------------------
+  PART 1 - OPENING (0:00 - 0:25)
+----------------------------------------------------------------------------
+
+ [SAY] "Good morning, my name is ________________. My project is the Design
+        and Implementation of a Mobile-Based Emergency Alert System using GPS,
+        using Spar Hypermarket Enugu as the case study.
+
+        The problem I solved is simple to state: inside a busy hypermarket, a
+        shopper in trouble - a robbery, a fire, a medical collapse - has no
+        fast way to reach security, and security has no way to know exactly
+        where that person is.
+
+        My system reduces the entire emergency report to ONE TAP, and it tells
+        security the exact GPS position of the victim."
+
+ [SAY] "I will now demonstrate the complete journey live, with the two halves
+        of the system running at the same time: the shopper's phone here
+        [point to phone], and the Security Command Dashboard on the laptop."
+
+----------------------------------------------------------------------------
+----------------------------------------------------------------------------
+  PART 2 - MODE 1: THE SHOPPER'S ONE-TAP SOS APP (0:25 - 1:40)
+----------------------------------------------------------------------------
+
+ [CLICK] Hold up the phone so the examiner can see it.
+ [SAY]   "This is the citizen application, and I want you to notice what is NOT
+          here. There is no login screen. There is no registration form. There
+          is no text box anywhere on this screen.
+
+          [point] Not one single field to type into."
+
+ [SAY]   "That is the most important design decision in this project. A person
+          being robbed, or watching somebody collapse, cannot type their name
+          and phone number. The profile was registered ONCE, calmly, long before
+          any emergency - you can see it loaded at the top of the screen:
+          the citizen's name, the location, and the mall.
+
+          So the handset opens directly here, on the emergency screen. Nothing
+          stands between the victim and help."
+
+ [CLICK] Point at the top status bar.
+ [SAY]   "The status bar confirms three things at a glance: who is holding this
+          handset, which mall they are in, and that the GPS is active."
+
+ [CLICK] Toggle "Silent Mode" ON, then OFF again.
+ [SAY]   "This is Silent Mode. In a robbery the victim cannot afford a single
+          sound. With Silent Mode the alert is still transmitted at full speed,
+          but the handset stays silent - confirmation comes as a vibration, and
+          the control room can see that the citizen signalled quietly."
+
+----------------------------------------------------------------------------
+  PART 3 - CHOOSING THE EVENT, THEN ONE TAP (1:40 - 2:20)
+----------------------------------------------------------------------------
+
+ [CLICK] Point at the six icons under "What is happening?" - do NOT press yet.
+ [SAY]   "Under the button there are six icons, and I deliberately named them
+          after real events, not vague headings.
+
+          This one says ROBBERY. This one says THEFT. This one says
+          FIGHT or ASSAULT. Then MEDICAL, FIRE, and OTHER.
+
+          I did not call them 'Security' or 'Category 1', because a frightened
+          person recognises the event in front of them far faster than an
+          abstract category. And every one of these is OPTIONAL - watch."
+
+ [CLICK] Press the big red "EMERGENCY SOS" button WITHOUT choosing any icon,
+         then immediately press "CANCEL - I PRESSED BY MISTAKE".
+ [SAY]   "I pressed SOS without selecting anything - and the system still
+          handled it correctly, because a single tap on the red button is
+          already a complete report. It would have gone out as OTHER.
+
+          And I have just pressed it by accident on purpose, which shows the
+          five-second cancel window. It prevents false alarms - in a real mall
+          that means it prevents wasting an officer on a pocket dial. A
+          cancelled alert is still recorded in the database as CANCELLED, so
+          there is a complete audit trail."
+
+ [CLICK] Now press "ROBBERY" (or THEFT, or MEDICAL - your choice), then press
+         the big red "EMERGENCY SOS" button and LET THE COUNTDOWN FINISH.
+ [PAUSE] Let the examiner watch the countdown bar and the number going down.
+ [SAY]   "Five seconds: long enough to catch a mistake, short enough that it
+          never delays a real emergency."
+
+ [CLICK] When the green screen appears:
+ [SAY]   "The citizen now sees 'HELP IS ON THE WAY - Security has been
+          alerted', with the GPS distance from the mall centre computed by the
+          Haversine formula, and the geofence decision.
+
+          Everything was written to a local SQLite database in real time. No
+          cloud service and no paid API anywhere in this project - the whole
+          system runs offline on one laptop."
+
+----------------------------------------------------------------------------
+  PART 4 - MODE 2: THE SECURITY COMMAND DASHBOARD (2:20 - 4:30)
+----------------------------------------------------------------------------
+
+ [CLICK] Switch the examiner's attention to the LAPTOP.
+ [PAUSE] The siren should already be RINGING by itself.
+
+ [SAY]   "Notice what happened without anybody clicking anything: the dashboard
+          detected the new ACTIVE alert within three seconds, the siren started
+          by itself, and the whole dashboard border is flashing red. The
+          operator cannot possibly miss an emergency."
+
+ [CLICK] Point at the red banner: "1 ACTIVE EMERGENCY ALERT(S)".
+ [SAY]   "The alert has been received and broadcast. Three things identify it:
+          the citizen's name and phone number, the category - FIRE - and the
+          exact time."
+
+ [CLICK] Point at the line "Distance from Mall Centre: XX.X metres".
+ [SAY]   "This is the academic core of the project. The distance between the
+          victim's GPS position and the pre-surveyed centre of Spar Enugu is
+          computed with the Haversine formula - the great-circle distance on a
+          sphere:
+
+              a = sin²(Δφ/2) + cos φ₁ · cos φ₂ · sin²(Δλ/2)
+              c = 2 · atan2(√a, √(1−a))
+              d = R · c            with R = 6 371 008.8 metres
+
+          I did not use a flat approximation, because at this scale - tens of
+          metres - a flat approximation and the Haversine can disagree, and
+          inside a building those metres decide which officer is closest."
+
+ [CLICK] Open the expander "📐 Haversine working & audit trail" on the alert card.
+ [SAY]   "The system does not just use the formula, it SHOWS the working with
+          the actual numbers: the latitudes and longitudes in radians, Δφ, Δλ,
+          the intermediate value a, the central angle c, and finally R times c
+          in metres - and then the geofence decision: inside or outside the
+          150-metre geofence."
+
+ [CLICK] Close the expander. Point at the map / offline site plan.
+ [SAY]   "On the map there are three classes of marker: blue for the four
+          security posts - Main Entrance, Parking Lot, Admin Block and Cold
+          Storage; green for officers who are available; and the red pulsing
+          marker for the live SOS. The dashed circle is the 150-metre geofence
+          around the mall centre."
+
+ [IF ASKED] "How does it work without internet?"
+ [SAY]   "The default view is an offline site plan that I drew in SVG inside the
+          application, so the markers, the geofence and the pulsing alert all
+          work with the network cable unplugged. The interactive Leaflet map is
+          available too - I put it in the sidebar - but an emergency system
+          must never depend on the public internet, so it is not the default."
+
+ [CLICK] Press "🚓 Dispatch Officer" on the alert card.
+ [SAY]   "The system now assigns an officer automatically. It does NOT pick the
+          first available officer: it ranks every available officer with the
+          same Haversine function and chooses the nearest one. A message shows
+          the distance and the estimated walking time."
+
+ [CLICK] Point at the phone screen.
+ [SAY]   "And here is the part I am most proud of: the victim's phone updates
+          itself, without a refresh, to show that an officer has been
+          dispatched. The citizen knows that help is actually coming - which is
+          psychologically the most important part of an emergency response."
+
+ [CLICK] Optional, if time allows: press "✅ Mark Resolved".
+ [SAY]   "Resolving the alert closes the incident, releases the officer back to
+          available status, and records the response time. That gives the mall
+          real statistics: average response time, alerts by category, and a
+          complete audit trail of who did what and when."
+
+----------------------------------------------------------------------------
+  PART 5 - CLOSING, AND THE SAFETY FEATURES (4:30 - 5:00)
+----------------------------------------------------------------------------
+
+ [CLICK] Press "🔔 Silence Alarm".
+ [SAY]   "The alarm can be silenced by the operator, but the alert stays on
+          screen, and a NEW alert will ring again. The alarm is never silenced
+          permanently by accident."
+
+ [SAY]   "To summarise the design decisions behind the system:
+
+          One - the citizen interface has no text input at all, because a
+          victim cannot type.
+
+          Two - false alarms are controlled by a five-second cancel window,
+          and an abandoned alert is automatically cancelled after 60 seconds.
+
+          Three - the control room gets an automatic audible alarm, a flashing
+          border and a live map, because a silent screen is a missed emergency.
+
+          Four - position is turned into a real decision using the Haversine
+          formula and nearest-officer assignment.
+
+          Five - everything runs locally on SQLite, so the system still works
+          when the internet does not.
+
+          Thank you. I am ready for your questions."
+
+----------------------------------------------------------------------------
+  PART 6 - LIKELY QUESTIONS AND MODEL ANSWERS
+----------------------------------------------------------------------------
+
+ Q: Why is there no onboarding form on the citizen screen?
+ A: Because a person in danger cannot fill a form, and a registration wall in
+    an emergency application is a design fault. The profile is registered once,
+    calmly, before any emergency (the handset remembers its owner exactly as an
+    installed app would), so ?mode=sos opens directly on the red SOS button.
+    Registration still exists - but it sits behind a deliberate "Switch citizen"
+    button on its own screen, and an automated test asserts that the emergency
+    screen contains ZERO text inputs.
+
+ Q: Why those six icons, and why not one generic button?
+ A: There IS a generic option: pressing the red SOS button with nothing else
+    selected sends the alert as OTHER, in one single tap - I demonstrate that.
+    The six icons only give the control room extra information faster, and they
+    are named after real events (Robbery, Theft, Fight/Assault, Medical, Fire)
+    rather than vague headings, because a frightened person recognises what is
+    happening in front of them far quicker than an abstract category. Every
+    icon is optional, so the worst case is still one tap.
+
+ Q: Why Haversine and not Euclidean distance?
+ A: Because latitude and longitude are angles on a sphere, not flat X and Y
+    coordinates. Haversine converts them into the great-circle distance on the
+    Earth's surface. My unit tests prove it: one degree of latitude at the
+    equator returns 111 195.1 metres, which is exactly R × π/180, and two
+    antipodal points return π × R = 20 015 114 metres.
+
+ Q: Where did the mall coordinates come from?
+ A: 6.4521 N, 7.5089 E is the geo-reference point for Spar Hypermarket, Polo
+    Park Mall, Abakaliki Road, Enugu. In the defence demo the handset fix is
+    simulated inside the compound, which is stated in the project document; the
+    code path is exactly the same as a real handset would use.
+
+ Q: Is the GPS real?
+ A: The coordinate capture is simulated for reproducibility during the
+    demonstration. The system stores and processes a real GPS fix: latitude,
+    longitude, the Haversine distance and the geofence test. Swapping the
+    simulation for the browser's navigator.geolocation or an Android location
+    service changes only the source of the numbers.
+
+ Q: What happens if two emergencies happen at the same time?
+ A: Each alert is an independent row with its own status. The queue sorts
+    ACTIVE alerts first, each one can be dispatched to a different officer, and
+    each officer is marked DISPATCHED so two alerts cannot claim the same
+    person. The alarm keeps ringing until every unacknowledged alert is either
+    silenced or resolved.
+
+ Q: How do you know the alarm really plays automatically?
+ A: Two defences. The siren is embedded as a base64 audio element with
+    autoplay and loop, and there is a Web Audio fallback that synthesises a
+    two-tone siren if the browser blocks the file. I also added a "Test alarm"
+    button so the operator can prove the audio works before anything happens.
+
+ Q: Is the password stored securely?
+ A: No plain text. The control-room password is stored as a PBKDF2-HMAC-SHA256
+    hash with 120 000 iterations and a per-user random salt, and it is compared
+    with a constant-time comparison. There is a unit test that asserts the
+    plain password never appears in the database.
+
+ Q: What are the limitations?
+ A: The GPS fix is simulated; there is no live officer tracking hardware yet;
+    the deployment is a single-machine prototype on a local network; and
+    production use would need HTTPS, role-based permissions and a real handset
+    application. Those are stated in the recommendations chapter.
+
+ Q: How did you test it?
+ A: 70 automated tests: unit tests for the Haversine mathematics and the
+    geofence, tests for every state of the alert workflow (PENDING, ACTIVE,
+    DISPATCHED, RESOLVED, CANCELLED), tests for the nearest-officer algorithm,
+    per-user authentication tests, and end-to-end tests that drive the real
+    user interface and assert that the citizen screen contains no text input.
+    I also have a script that launches the real server and checks both modes.
+
+----------------------------------------------------------------------------
+  PART 7 - TROUBLE-SHOOTING (IF SOMETHING GOES WRONG ON THE PODIUM)
+----------------------------------------------------------------------------
+
+ PROBLEM: Nothing happens / the page will not load.
+ FIX:     The server window was probably closed. Double-click run_app.bat.
+         It restarts in a few seconds. Re-open the URL it prints.
+
+ PROBLEM: "Port 8501 is not available".
+ FIX:     Something else is using 8501. setup_and_start.bat and run_app.bat
+         already detect this and select the next free port automatically -
+         read the port number printed in the window and use it in the URL.
+         You can also force one:  setup_and_start.bat 8505
+
+ PROBLEM: The phone cannot open the page.
+ FIX:     (1) Same Wi-Fi or hotspot? (2) Use the LAN IP printed by the
+         scripts, not "localhost" - localhost on a phone means the phone
+         itself. (3) Allow Python through Windows Firewall for private
+         networks, or temporarily turn the firewall off for the demo.
+         (4) Fallback: show the SOS app on the laptop in a second browser tab
+         with  http://localhost:8501/?mode=sos  and use window snapping so the
+         examiner still sees both views side by side.
+
+ PROBLEM: The dashboard does not ring.
+ FIX:     Click "🔊 Test alarm (5 s)". That proves the speaker and the sound
+         settings. Once the browser has had one real click, the automatic
+         alarm works. Make sure the tab is not muted (right-click the browser
+         tab and check "Unmute site").
+
+ PROBLEM: The phone screen still shows the old alert.
+ FIX:     Press "🏠 Back to home screen" on the phone, or reload the tab.
+
+ PROBLEM: You want to start from a clean, empty queue.
+ FIX:     Run:  python setup_db.py --reset
+         This wipes every alert (keeping the seed data) so the demonstration
+         starts with an empty queue. Do NOT run it in front of the examiner.
+
+ PROBLEM: The examiner asks "show me the database".
+ FIX:     Run:  python setup_db.py --status
+         It prints a full verification report: every table with its row count,
+         the four security posts with their Haversine distance from the centre,
+         the officers, the logins and the alert statistics.
+
+============================================================================
+  END OF DEMO SCRIPT - good luck. Speak slowly, let the siren do the talking.
+============================================================================
