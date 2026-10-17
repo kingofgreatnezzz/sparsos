@@ -246,9 +246,10 @@ def _render_register_screen() -> None:
             help="Required - security cannot be sent to you without a GPS fix.",
         )
         silent = st.toggle(
-            "🔇 Silent Mode", value=False, key="reg_silent",
-            help="Mutes all sounds on this handset. Use it in a robbery so that the alert "
-                 "is sent quietly and felt as a vibration instead.",
+            "🔇 Discreet flag", value=False, key="reg_silent",
+            help="The handset never makes a sound - confirmation is always by vibration "
+                 "only. Switch this on to also tell the control room that this citizen "
+                 "cannot speak and needs a discreet approach.",
         )
         submitted = st.form_submit_button("✅ Save this citizen", **WIDTH_STRETCH)
 
@@ -280,8 +281,12 @@ def _render_status_bar() -> None:
         if location_on
         else '<span class="dot-warn">● Location OFF</span>'
     )
+    # The handset is ALWAYS silent by design, so the status bar simply states
+    # that fact.  (Previously it showed "Sound On" / "Silent Mode"; that would
+    # now be misleading because no sound is ever produced on the citizen side.)
     silent_html = (
-        '<span class="dot-warn">🔇 Silent Mode</span>' if silent else '<span class="dot-ok">🔊 Sound On</span>'
+        '<span class="dot-warn">🔇 Discreet alert flagged</span>' if silent
+        else '<span class="dot-ok">🔇 Handset silent</span>'
     )
 
     st.markdown(
@@ -300,18 +305,20 @@ def _render_status_bar() -> None:
 
 
 def _render_silent_toggle() -> None:
-    """Silent Mode toggle - mirrored into the database for the control room."""
+    """Discreet-alert flag - mirrored into the database for the control room."""
     user = st.session_state.sos_user or {}
     current = bool(st.session_state.sos_silent)
 
     left, right = st.columns([3, 1])
     with left:
         st.caption(
-            "🔇 Silent Mode mutes every sound on this handset. The control room is told "
-            "that you are signalling quietly."
+            "🔇 **Your handset never makes a sound** - confirmation is always by "
+            "vibration only, so nobody near you can hear that you raised the alarm. "
+            "Switch this on to also tell the control room that you cannot speak and "
+            "need them to approach discreetly."
         )
     with right:
-        new_value = st.toggle("Silent Mode", value=current, key="sos_silent_toggle")
+        new_value = st.toggle("Discreet flag", value=current, key="sos_silent_toggle")
 
     if new_value != current:
         st.session_state.sos_silent = new_value
@@ -650,26 +657,29 @@ def _render_success_screen() -> None:
             "officer will still be dispatched."
         )
 
+    # NOTE: the handset never makes a sound - see the security note below.
     if st.session_state.get("sos_silent"):
         st.info(
-            "🔇 **Silent Mode was ON** - your handset made no sound. Confirmation was sent "
-            "as a vibration only, so the alert could not be heard by anyone near you. "
-            "The control room can see that you signalled quietly."
+            "🔇 **Discreet alert sent.** Your handset made no sound - confirmation was "
+            "delivered as a vibration only. The control room can see that you signalled "
+            "quietly."
         )
     else:
-        st.caption("🔊 A confirmation tone and vibration were played on your handset.")
+        st.caption(
+            "🔇 **Your handset made no sound.** Confirmation was delivered as a "
+            "vibration only, so nobody standing near you could hear that you raised "
+            "the alarm."
+        )
 
-    # Audible / haptic feedback (muted entirely by Silent Mode).
-    silent = bool(st.session_state.get("sos_silent"))
+    # Haptic feedback only.  The citizen's phone is deliberately SILENT: in an
+    # armed robbery or a kidnapping a beep would be heard by the offender and
+    # would put the victim in danger.  The audible siren lives on the SECURITY
+    # DASHBOARD (utils.render_alarm_strip), not here.
     components.html(
         feedback_html(
             vibrate=True,
-            beep=not silent,
-            message=(
-                "Silent Mode: vibration only"
-                if silent
-                else "Confirmation tone played"
-            ),
+            beep=False,
+            message="Confirmation sent silently (vibration only)",
         ),
         height=24,
     )

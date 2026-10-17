@@ -543,29 +543,27 @@ def render_alarm_strip(ring: bool, detail: str = "", silent_hint: bool = False) 
     )
 
 
-def feedback_html(vibrate: bool = True, beep: bool = True, message: str = "") -> str:
-    """Haptic + audible feedback for the citizen's phone after an SOS.
+def feedback_html(vibrate: bool = True, beep: bool = False, message: str = "") -> str:
+    """Haptic feedback for the citizen's phone after an SOS.
 
-    * ``beep``  - a short confirmation chirp (suppressed by Silent Mode).
-    * ``vibrate`` - ``navigator.vibrate`` pattern (works even in Silent Mode,
-      which is exactly why haptics are used for discreet confirmation).
+    SECURITY DECISION - NO SOUND ON THE CITIZEN'S HANDSET
+    -----------------------------------------------------
+    The victim's phone must never make a sound.  In an armed robbery, a
+    kidnapping or a home invasion a sudden beep can be heard by the offender,
+    reveal that the victim has already alerted the police, and put the victim
+    in immediate danger.  The confirmation is therefore **vibration only**.
 
-    This is what the "Silent Mode" toggle actually mutes on the victim's
-    handset, which is the security requirement for robbery scenarios.
+    The ``beep`` argument is kept in the signature for backwards compatibility
+    but is deliberately ignored: no ``<audio>`` element is ever emitted here.
+    The audible alarm belongs on the SECURITY DASHBOARD (see
+    :func:`render_alarm_strip`), which is in the control room - not in the room
+    with the offender.
+
+    ``vibrate`` - ``navigator.vibrate`` pattern.  Haptics are silent, so they
+    confirm the SOS without giving the victim away.
     """
-    b64 = alarm_base64()
+    # No tone is ever produced on the citizen side.  See the docstring.
     tone = ""
-    if beep and b64:
-        tone = f"""
-        <audio id="spar-chirp" autoplay preload="auto" style="display:none;">
-          <source src="data:audio/wav;base64,{b64}" type="audio/wav">
-        </audio>
-        <script>
-          (function(){{
-            var a = document.getElementById('spar-chirp');
-            if (a) {{ a.volume = 1.0; var p = a.play(); if (p && p.catch) {{ p.catch(function(){{}}); }} }}
-          }})();
-        </script>"""
     vib = ""
     if vibrate:
         vib = """

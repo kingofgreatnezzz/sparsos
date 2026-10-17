@@ -24,15 +24,15 @@ if not "%PORT%"=="" goto :port_ready
 
 set /a PORT=8501
 :find_port
-netstat -ano | findstr ":%PORT%" | findstr "LISTENING" >nul
+netstat -ano | findstr ":%PORT% " | findstr "LISTENING" >nul
 if errorlevel 1 goto :port_ready
 echo   Port %PORT% is already in use - trying the next port ...
 set /a PORT+=1
-if %PORT% GTR 8510 goto :port_fail
+if %PORT% GTR 8550 goto :port_fail
 goto :find_port
 
 :port_fail
-echo [ERROR] Ports 8501-8510 are all busy. Run:  run_app.bat 8520
+echo [ERROR] Ports 8501-8550 are all busy. Run:  run_app.bat 8560
 pause
 exit /b 1
 

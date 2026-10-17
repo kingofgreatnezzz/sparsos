@@ -83,12 +83,23 @@ def main() -> None:
     # 1. Work out the mode BEFORE any element is created, because the page
     #    layout (wide dashboard vs. narrow handset view) depends on it.
     # ------------------------------------------------------------------
+    # A deep link (?mode=sos) is applied ONCE, when the session starts.
+    # After that the sidebar switcher owns the mode.
+    #
+    # This used to re-apply the URL mode on EVERY run, comparing it with the
+    # radio's current value.  So the moment the address bar held
+    # ?mode=dashboard, a click on "Shopper / Staff SOS App" was overruled on
+    # the very next run and the view snapped straight back to the dashboard -
+    # the switcher looked completely dead.  Reading the URL only at session
+    # start removes that fight for good.
     url_mode = _mode_from_url()
+    if "_url_mode_applied" not in st.session_state:
+        st.session_state["_url_mode_applied"] = True
+        if "mode_radio" not in st.session_state and url_mode:
+            st.session_state.mode_radio = url_mode
+
     if "mode_radio" not in st.session_state:
-        st.session_state.mode_radio = url_mode or MODE_DASHBOARD
-    elif url_mode and url_mode != st.session_state.mode_radio:
-        # A deep link (?mode=sos) always wins - that is what the phone uses.
-        st.session_state.mode_radio = url_mode
+        st.session_state.mode_radio = MODE_DASHBOARD
 
     mode = st.session_state.mode_radio
 
@@ -147,10 +158,16 @@ def main() -> None:
     # 3. Render the selected mode.
     # ------------------------------------------------------------------
     mode = st.session_state.mode_radio
-    if url_mode != mode:
-        # Keep the URL shareable; writing query params triggers one rerun so
-        # that the page layout matches the newly selected mode.
-        st.query_params["mode"] = mode
+
+    # Keep the address bar in step with the chosen view so the URL stays
+    # shareable (e.g. ?mode=sos for the phone).  This only WRITES the URL - it
+    # is never fed back into the mode decision above, so the sidebar always
+    # wins and the view can no longer snap back.
+    try:
+        if str(st.query_params.get("mode") or "") != mode:
+            st.query_params["mode"] = mode
+    except Exception:  # query params are a convenience, never critical
+        pass
 
     if mode == MODE_SOS:
         render_sos_app()
